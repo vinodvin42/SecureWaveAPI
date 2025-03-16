@@ -24,7 +24,6 @@ namespace SecureWave.Models
         public FileSystemType FileSystemType { get; set; } // File system type (e.g., S3, NFS)
         public ContainerType ContainerType { get; set; } // Container type (e.g., Docker, Kubernetes)
         public DeviceType DeviceType { get; set; } // Device type (e.g., IoT, Printer)
-        public string CertificateDetails { get; set; } // Certificate details (e.g., PEM file)
 
         // Navigation Properties
         public ICollection<Credential> Credentials { get; set; } = new List<Credential>(); // One-to-Many with Credentials
@@ -48,5 +47,4 @@ namespace SecureWave.Models
 //FileSystemType: Type of file system (e.g., S3, NFS, FTP).
 //ContainerType: Type of container (e.g., Docker, Kubernetes).
 //DeviceType: Type of device (e.g., IoT Device, Printer).
-//CertificateDetails: Details of certificates (e.g., PEM file content).
 

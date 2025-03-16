@@ -57,5 +57,35 @@ namespace SecureWaveAPI.Repositories
         {
             return await Task.FromResult(Enum.GetNames(typeof(Protocol)));
         }
+
+        public async Task<IEnumerable<string>> GetResourceOperatingSystemAsync()
+        {
+            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.OperatingSystem)));
+        }
+
+        public async Task<IEnumerable<string>> GetResourceDatabaseTypeAsync()
+        {
+            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.DatabaseType)));
+        }
+
+        public async Task<IEnumerable<string>> GetResourceCloudProviderAsync()
+        {
+            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.CloudProvider)));
+        }
+
+        public async Task<IEnumerable<string>> GetResourceFileSystemTypeAsync()
+        {
+            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.FileSystemType)));
+        }
+
+        public async Task<IEnumerable<string>> GetResourceContainerTypeAsync()
+        {
+            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.ContainerType)));
+        }
+
+        public async Task<IEnumerable<string>> GetResourceDeviceTypeAsync()
+        {
+            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.DeviceType)));
+        }
     }
 }

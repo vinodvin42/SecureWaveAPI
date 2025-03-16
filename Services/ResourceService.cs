@@ -47,5 +47,35 @@ namespace SecureWaveAPI.Services
         {
             return await _resourceRepository.GetResourceProtocolAsync();
         }
+
+        public async Task<IEnumerable<string>> GetResourceOperatingSystemAsync()
+        {
+            return await _resourceRepository.GetResourceOperatingSystemAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetResourceDatabaseTypeAsync()
+        {
+            return await _resourceRepository.GetResourceDatabaseTypeAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetResourceCloudProviderAsync()
+        {
+            return await _resourceRepository.GetResourceCloudProviderAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetResourceFileSystemTypeAsync()
+        {
+            return await _resourceRepository.GetResourceFileSystemTypeAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetResourceContainerTypeAsync()
+        {
+            return await _resourceRepository.GetResourceContainerTypeAsync();
+        }
+
+        public Task<IEnumerable<string>> GetResourceDeviceTypeAsync()
+        {
+            return _resourceRepository.GetResourceDeviceTypeAsync();
+        }
     }
 }

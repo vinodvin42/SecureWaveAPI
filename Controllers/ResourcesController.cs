@@ -79,5 +79,47 @@ namespace SecureWave.Controllers
             var resourceProtocall = await _resourceService.GetResourceProtocolAsync();
             return Ok(resourceProtocall);
         }
+
+        [HttpGet("operatingsystem")]
+        public async Task<ActionResult> GetResourceOperatingSystemAsync()
+        {
+            var resourceOperatingSystem = await _resourceService.GetResourceOperatingSystemAsync();
+            return Ok(resourceOperatingSystem);
+        }
+
+        [HttpGet("databasetype")]
+        public async Task<ActionResult> GetResourceDatabaseTypeAsync()
+        {
+            var databaseType = await _resourceService.GetResourceDatabaseTypeAsync();
+            return Ok(databaseType);
+        }
+
+        [HttpGet("cloudprovider")]
+        public async Task<ActionResult> GetResourceCloudProviderAsync()
+        {
+            var cloudProvider = await _resourceService.GetResourceCloudProviderAsync();
+            return Ok(cloudProvider);
+        }
+
+        [HttpGet("filesystemtype")]
+        public async Task<ActionResult> GetResourceFileSystemTypeAsync()
+        {
+            var fileSystemTypes = await _resourceService.GetResourceFileSystemTypeAsync();
+            return Ok(fileSystemTypes);
+        }
+
+        [HttpGet("containertype")]
+        public async Task<ActionResult> GetResourceContainerTypeAsync()
+        {
+            var containerTypes = await _resourceService.GetResourceContainerTypeAsync();
+            return Ok(containerTypes);
+        }
+
+        [HttpGet("devicetype")]
+        public async Task<ActionResult> GetResourceDeviceTypeAsync()
+        {
+            var deviceTypes = await _resourceService.GetResourceDeviceTypeAsync();
+            return Ok(deviceTypes);
+        }
     }
 }

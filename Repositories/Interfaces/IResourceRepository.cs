@@ -15,5 +15,11 @@ namespace SecureWaveAPI.Repositories
         Task DeleteResourceAsync(Guid id);
         Task<IEnumerable<string>> GetResourceTypesAsync();
         Task<IEnumerable<string>> GetResourceProtocolAsync();
-    }
+        Task<IEnumerable<string>> GetResourceOperatingSystemAsync();
+        Task<IEnumerable<string>> GetResourceDatabaseTypeAsync();
+        Task<IEnumerable<string>> GetResourceCloudProviderAsync();
+        Task<IEnumerable<string>> GetResourceFileSystemTypeAsync();
+        Task<IEnumerable<string>> GetResourceContainerTypeAsync();
+        Task<IEnumerable<string>> GetResourceDeviceTypeAsync();
+     }
 }
