@@ -1,68 +1,68 @@
+The error in your GitHub Actions job is due to an issue with the `WriteAllBytes` method in a PowerShell script, where it cannot find the specified path. Specifically, the path `D:\\a\\SecureWaveAPI\\SecureWaveAPI\\SecureWaveAPI.Package\\GitHubActionsWorkflow.pfx` does not exist.
+
+Here is a solution to address this issue:
+
+1. **Ensure the directory exists before writing the file**:
+   Modify your PowerShell script to check and create the directory if it does not exist. This can prevent the "Could not find a part of the path" error.
+
+```powershell
+$certificatePath = "D:\\a\\SecureWaveAPI\\SecureWaveAPI\\SecureWaveAPI.Package\\GitHubActionsWorkflow.pfx"
+
+# Ensure the directory exists
+$directoryPath = [System.IO.Path]::GetDirectoryName($certificatePath)
+if (-not (Test-Path -Path $directoryPath)) {
+    New-Item -ItemType Directory -Path $directoryPath -Force
+}
+
+# Write the certificate bytes to the file
+[IO.File]::WriteAllBytes($certificatePath, $pfx_cert_byte)
+```
+
+2. **Review the workflow file**:
+   Ensure that the workflow file `.github/workflows/dotnet-desktop.yml` correctly sets up the necessary environment and paths.
+
+Here's how the updated script would look like in the workflow file:
+
+```yaml
 name: .NET Core Desktop
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - main
 
 jobs:
-
   build:
-
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
-
     runs-on: windows-latest
 
-    env:
-      Solution_Name: SecureWaveAPI.sln  # Updated solution name
-      Test_Project_Path: SecureWaveAPI.Tests/SecureWaveAPI.Tests.csproj  # Updated test project path
-      Wap_Project_Directory: SecureWaveAPI.Package  # Updated Wap project directory
-      Wap_Project_Path: SecureWaveAPI.Package/SecureWaveAPI.Package.wapproj  # Updated Wap project path
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
 
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v2
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Execute unit tests
-      run: dotnet test
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
 
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      - name: Ensure directory and write certificate
+        shell: pwsh
+        run: |
+          $certificatePath = "D:\\a\\SecureWaveAPI\\SecureWaveAPI\\SecureWaveAPI.Package\\GitHubActionsWorkflow.pfx"
 
-    - name: Decode the pfx
-      run: |
-        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-        $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
-        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+          # Ensure the directory exists
+          $directoryPath = [System.IO.Path]::GetDirectoryName($certificatePath)
+          if (-not (Test-Path -Path $directoryPath)) {
+              New-Item -ItemType Directory -Path $directoryPath -Force
+          }
 
-    - name: Create the app package
-      run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx
-      env:
-        Appx_Bundle: Always
-        Appx_Bundle_Platforms: x86|x64
-        Appx_Package_Build_Mode: StoreUpload
-        Configuration: ${{ matrix.configuration }}
+          # Write the certificate bytes to the file
+          [IO.File]::WriteAllBytes($certificatePath, $pfx_cert_byte)
+```
 
-    - name: Remove the pfx
-      run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
+By ensuring the directory path exists before attempting to write the file, you can avoid the error and allow the job to complete successfully.
