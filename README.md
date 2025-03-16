@@ -1,4 +1,4 @@
-The SecureWave project structure you provided is a well-organized and modular architecture for a Privileged Access Management (PAM) API. Below is a detailed explanation of each folder and its purpose, along with the role of the files within them.
+The SecureWave project structure you provided is a well-organized and modular architecture for a Privileged Access Management (PAM) API. Below is a detailed explanation of each folder and its purpose, along with the role of the files within them. 
 
 1. Controllers/
 This folder contains API controllers that handle HTTP requests and responses. Each controller corresponds to a specific entity or feature in the application.
