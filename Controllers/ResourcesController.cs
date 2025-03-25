@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SecureWave.Models;
-using SecureWaveAPI.Models.Enums;
 using SecureWaveAPI.Services;
-using System.Security.AccessControl;
 
 namespace SecureWave.Controllers
 {

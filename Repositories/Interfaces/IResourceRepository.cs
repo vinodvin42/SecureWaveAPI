@@ -1,8 +1,4 @@
 ﻿using SecureWave.Models;
-using SecureWaveAPI.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SecureWaveAPI.Repositories
 {

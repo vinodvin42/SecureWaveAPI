@@ -1,5 +1,4 @@
 ﻿using SecureWave.Models;
-using SecureWaveAPI.Models.Enums;
 using SecureWaveAPI.Repositories;
 
 namespace SecureWaveAPI.Services

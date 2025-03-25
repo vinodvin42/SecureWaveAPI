@@ -2,9 +2,6 @@
 using SecureWave.Data;
 using SecureWave.Models;
 using SecureWaveAPI.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SecureWaveAPI.Repositories
 {
@@ -24,7 +21,12 @@ namespace SecureWaveAPI.Repositories
 
         public async Task<Resource> GetResourceByIdAsync(Guid id)
         {
-            return await _context.Resources.FindAsync(id);
+            var resource = await _context.Resources.FindAsync(id);
+            if (resource == null)
+            {
+                throw new KeyNotFoundException($"Resource with id {id} not found.");
+            }
+            return resource;
         }
 
         public async Task AddResourceAsync(Resource resource)

@@ -8,22 +8,23 @@ namespace SecureWave.Models
         public Guid ResourceId { get; set; } = Guid.NewGuid();
 
         // Resource Details
-        public string ResourceName { get; set; } // Name of the resource (e.g., "Production Server 1")
+        public string? ResourceName { get; set; } // Name of the resource (e.g., "Production Server 1")
         public ResourceType ResourceType { get; set; } // Type of resource (e.g., Server, Database)
-        public string Description { get; set; } // Description of the resource
+        public string? Description { get; set; } // Description of the resource
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // Timestamp of creation
 
         // Additional Fields for Resource-Specific Details
-        public string HostName { get; set; } // Hostname or IP address
+        public string? HostName { get; set; } // Hostname or IP address
         public int? Port { get; set; } // Port number (if applicable)
         public Protocol Protocol { get; set; } // Protocol (e.g., SSH, RDP)
         public SecureWaveAPI.Models.Enums.OperatingSystem OperatingSystem { get; set; } // OS (e.g., Linux, Windows)
         public DatabaseType DatabaseType { get; set; } // Database type (e.g., MySQL, PostgreSQL)
         public CloudProvider CloudProvider { get; set; } // Cloud provider (e.g., AWS, Azure)
-        public string ApiEndpoint { get; set; } // API endpoint (e.g., https://api.example.com)
+        public string? ApiEndpoint { get; set; } // API endpoint (e.g., https://api.example.com)
         public FileSystemType FileSystemType { get; set; } // File system type (e.g., S3, NFS)
         public ContainerType ContainerType { get; set; } // Container type (e.g., Docker, Kubernetes)
         public DeviceType DeviceType { get; set; } // Device type (e.g., IoT, Printer)
+        public string? CertificateDetails { get; set; } // Certificate details (e.g., PEM file)
 
         // Navigation Properties
         public ICollection<Credential> Credentials { get; set; } = new List<Credential>(); // One-to-Many with Credentials
