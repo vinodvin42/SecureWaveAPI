@@ -61,6 +61,10 @@ internal class Program
         builder.Services.AddScoped<IAccessRequestRepository, AccessRequestRepository>();
         //Register RequestAccessService
         builder.Services.AddScoped<IAccessRequestService, AccessRequestService>();
+        // Register ComplianceCheckRepository
+        builder.Services.AddScoped<IComplianceCheckRepository, ComplianceCheckRepository>();
+        // Register ComplianceCheckService
+        builder.Services.AddScoped<IComplianceCheckService, ComplianceCheckService>();
 
 
         // Add JWT Authentication
