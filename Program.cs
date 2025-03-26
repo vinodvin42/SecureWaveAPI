@@ -13,7 +13,7 @@ using System.Text;
 
 internal class Program
 {
-    private static async Task Main(string[] args)
+    private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -61,7 +61,7 @@ internal class Program
         builder.Services.AddScoped<IAccessRequestRepository, AccessRequestRepository>();
         //Register RequestAccessService
         builder.Services.AddScoped<IAccessRequestService, AccessRequestService>();
-        
+
 
         // Add JWT Authentication
         var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:SecretKey"]);

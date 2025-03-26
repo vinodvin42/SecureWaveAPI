@@ -1,13 +1,14 @@
 ﻿using SecureWave.Models;
+using System.Threading.Tasks;
 
 namespace SecureWaveAPI.Repositories.Interfaces
 {
     public interface IAccessRequestRepository
     {
-        IEnumerable<AccessRequest> GetAllAccessRequests();
-        AccessRequest GetAccessRequestById(Guid id);
-        void CreateAccessRequest(AccessRequest accessRequest);
-        void UpdateAccessRequest(AccessRequest accessRequest);
-        void DeleteAccessRequest(Guid id);
+        Task<IEnumerable<AccessRequest>> GetAllAccessRequestsAsync();
+        Task<AccessRequest> GetAccessRequestByIdAsync(Guid id);
+        Task CreateAccessRequestAsync(AccessRequest accessRequest);
+        Task UpdateAccessRequestAsync(AccessRequest accessRequest);
+        Task DeleteAccessRequestAsync(Guid id);
     }
 }

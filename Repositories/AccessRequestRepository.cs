@@ -1,7 +1,8 @@
 ﻿using SecureWaveAPI.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using SecureWave.Models;
 using SecureWave.Data;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SecureWaveAPI.Repositories
 {
@@ -14,35 +15,37 @@ namespace SecureWaveAPI.Repositories
             _context = context;
         }
 
-        public IEnumerable<AccessRequest> GetAllAccessRequests()
+        public async Task<IEnumerable<AccessRequest>> GetAllAccessRequestsAsync()
         {
-            return _context.Set<AccessRequest>().ToList();
+            return await _context.Set<AccessRequest>().ToListAsync();
         }
 
-        public AccessRequest GetAccessRequestById(Guid id)
+        public async Task<AccessRequest> GetAccessRequestByIdAsync(Guid id)
         {
-            return _context.Set<AccessRequest>().Find(id);
+            //fix this warning 
+            
+            return await _context.Set<AccessRequest>().FindAsync(id);
         }
 
-        public void CreateAccessRequest(AccessRequest accessRequest)
+        public async Task CreateAccessRequestAsync(AccessRequest accessRequest)
         {
-            _context.Set<AccessRequest>().Add(accessRequest);
-            _context.SaveChanges();
+            await _context.Set<AccessRequest>().AddAsync(accessRequest);
+            await _context.SaveChangesAsync();
         }
 
-        public void UpdateAccessRequest(AccessRequest accessRequest)
+        public async Task UpdateAccessRequestAsync(AccessRequest accessRequest)
         {
             _context.Set<AccessRequest>().Update(accessRequest);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteAccessRequest(Guid id)
+        public async Task DeleteAccessRequestAsync(Guid id)
         {
-            var accessRequest = GetAccessRequestById(id);
+            var accessRequest = await GetAccessRequestByIdAsync(id);
             if (accessRequest != null)
             {
                 _context.Set<AccessRequest>().Remove(accessRequest);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }

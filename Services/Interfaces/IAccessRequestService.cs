@@ -1,13 +1,15 @@
 ﻿using SecureWave.Models;
+using System.Threading.Tasks;
 
 namespace SecureWaveAPI.Services.Interfaces
 {
     public interface IAccessRequestService
     {
-        IEnumerable<AccessRequest> GetAllAccessRequests();
-        AccessRequest GetAccessRequestById(Guid id);
-        void CreateAccessRequest(AccessRequest accessRequest);
-        void UpdateAccessRequest(AccessRequest accessRequest);
-        void DeleteAccessRequest(Guid id);
+        Task<IEnumerable<AccessRequest>> GetAllAccessRequestsAsync();
+        Task<AccessRequest> GetAccessRequestByIdAsync(Guid id);
+        Task CreateAccessRequestAsync(AccessRequest accessRequest);
+        Task UpdateAccessRequestAsync(AccessRequest accessRequest);
+        Task DeleteAccessRequestAsync(Guid id);
+        Task ApproveAccessRequestAsync(Guid id);
     }
 }

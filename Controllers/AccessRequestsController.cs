@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SecureWave.Models;
 using SecureWaveAPI.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace SecureWaveAPI.Controllers
 {
@@ -16,16 +17,16 @@ namespace SecureWaveAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllAccessRequests()
+        public async Task<IActionResult> GetAllAccessRequests()
         {
-            var accessRequests = _accessRequestService.GetAllAccessRequests();
+            var accessRequests = await _accessRequestService.GetAllAccessRequestsAsync();
             return Ok(accessRequests);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetAccessRequestById(Guid id)
+        public async Task<IActionResult> GetAccessRequestById(Guid id)
         {
-            var accessRequest = _accessRequestService.GetAccessRequestById(id);
+            var accessRequest = await _accessRequestService.GetAccessRequestByIdAsync(id);
             if (accessRequest == null)
             {
                 return NotFound();
@@ -34,41 +35,41 @@ namespace SecureWaveAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAccessRequest([FromBody] AccessRequest accessRequest)
+        public async Task<IActionResult> CreateAccessRequest([FromBody] AccessRequest accessRequest)
         {
             if (accessRequest == null)
             {
                 return BadRequest();
             }
-            _accessRequestService.CreateAccessRequest(accessRequest);
+            await _accessRequestService.CreateAccessRequestAsync(accessRequest);
             return CreatedAtAction(nameof(GetAccessRequestById), new { id = accessRequest.RequestId }, accessRequest);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateAccessRequest(Guid id, [FromBody] AccessRequest accessRequest)
+        public async Task<IActionResult> UpdateAccessRequest(Guid id, [FromBody] AccessRequest accessRequest)
         {
             if (accessRequest == null || accessRequest.RequestId != id)
             {
                 return BadRequest();
             }
-            var existingAccessRequest = _accessRequestService.GetAccessRequestById(id);
+            var existingAccessRequest = await _accessRequestService.GetAccessRequestByIdAsync(id);
             if (existingAccessRequest == null)
             {
                 return NotFound();
             }
-            _accessRequestService.UpdateAccessRequest(accessRequest);
+            await _accessRequestService.UpdateAccessRequestAsync(accessRequest);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteAccessRequest(Guid id)
+        public async Task<IActionResult> DeleteAccessRequest(Guid id)
         {
-            var existingAccessRequest = _accessRequestService.GetAccessRequestById(id);
+            var existingAccessRequest = await _accessRequestService.GetAccessRequestByIdAsync(id);
             if (existingAccessRequest == null)
             {
                 return NotFound();
             }
-            _accessRequestService.DeleteAccessRequest(id);
+            await _accessRequestService.DeleteAccessRequestAsync(id);
             return NoContent();
         }
     }

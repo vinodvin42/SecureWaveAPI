@@ -1,6 +1,7 @@
 ﻿using SecureWave.Models;
 using SecureWaveAPI.Repositories.Interfaces;
 using SecureWaveAPI.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace SecureWaveAPI.Services
 {
@@ -13,29 +14,39 @@ namespace SecureWaveAPI.Services
             _accessRequestRepository = accessRequestRepository;
         }
 
-        public IEnumerable<AccessRequest> GetAllAccessRequests()
+        public async Task<IEnumerable<AccessRequest>> GetAllAccessRequestsAsync()
         {
-            return _accessRequestRepository.GetAllAccessRequests();
+            return await _accessRequestRepository.GetAllAccessRequestsAsync();
         }
 
-        public AccessRequest GetAccessRequestById(Guid id)
+        public async Task<AccessRequest> GetAccessRequestByIdAsync(Guid id)
         {
-            return _accessRequestRepository.GetAccessRequestById(id);
+            return await _accessRequestRepository.GetAccessRequestByIdAsync(id);
         }
 
-        public void CreateAccessRequest(AccessRequest accessRequest)
+        public async Task CreateAccessRequestAsync(AccessRequest accessRequest)
         {
-            _accessRequestRepository.CreateAccessRequest(accessRequest);
+            await _accessRequestRepository.CreateAccessRequestAsync(accessRequest);
         }
 
-        public void UpdateAccessRequest(AccessRequest accessRequest)
+        public async Task UpdateAccessRequestAsync(AccessRequest accessRequest)
         {
-            _accessRequestRepository.UpdateAccessRequest(accessRequest);
+            await _accessRequestRepository.UpdateAccessRequestAsync(accessRequest);
         }
 
-        public void DeleteAccessRequest(Guid id)
+        public async Task DeleteAccessRequestAsync(Guid id)
         {
-            _accessRequestRepository.DeleteAccessRequest(id);
+            await _accessRequestRepository.DeleteAccessRequestAsync(id);
+        }
+
+        public async Task ApproveAccessRequestAsync(Guid id)
+        {
+            var accessRequest = await _accessRequestRepository.GetAccessRequestByIdAsync(id);
+            if (accessRequest != null)
+            {
+                accessRequest.Status = "Approved";
+                await _accessRequestRepository.UpdateAccessRequestAsync(accessRequest);
+            }
         }
     }
 }
