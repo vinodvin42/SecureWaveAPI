@@ -22,8 +22,7 @@ namespace SecureWaveAPI.Repositories
 
         public async Task<AccessRequest> GetAccessRequestByIdAsync(Guid id)
         {
-            //fix this warning 
-            
+            //fix this warning             
             return await _context.Set<AccessRequest>().FindAsync(id);
         }
 

@@ -30,7 +30,7 @@ namespace SecureWaveAPI.Services
             var role = await _roleRepository.GetRoleByIdAsync(id);
             if (role == null)
             {
-                return null;
+                throw new KeyNotFoundException($"Role with ID {id} not found.");
             }
             return new RoleDTO
             {

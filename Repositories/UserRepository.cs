@@ -16,12 +16,22 @@ namespace SecureWaveAPI.Repositories
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with username {username} not found.");
+            }
+            return user;
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with email {email} not found.");
+            }
+            return user;
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -31,7 +41,12 @@ namespace SecureWaveAPI.Repositories
 
         public async Task<User> GetUserByIdAsync(Guid id)
         {
-            return await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with ID {id} not found.");
+            }
+            return user;
         }
 
         public async Task AddUserAsync(User user)
@@ -58,7 +73,12 @@ namespace SecureWaveAPI.Repositories
 
         public async Task<Role> GetRoleByNameAsync(string roleName)
         {
-            return await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
+            if (role == null)
+            {
+                throw new KeyNotFoundException($"Role with name {roleName} not found.");
+            }
+            return role;
         }
 
         public async Task AddUserRoleAsync(UserRole userRole)
@@ -84,11 +104,10 @@ namespace SecureWaveAPI.Repositories
 
         public async Task<User> GetUserByRecoveryTokenAsync(string token)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.RecoveryToken == token);
-
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.RecoveryToken == token);
             if (user == null)
             {
-                throw new Exception("User not found.");
+                throw new KeyNotFoundException($"User with recovery token {token} not found.");
             }
             return user;
         }

@@ -112,7 +112,7 @@ namespace SecureWave.Services
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
             {
-                return null;
+                throw new KeyNotFoundException($"User with ID {id} not found.");
             }
             return new UserDTO
             {
@@ -299,7 +299,7 @@ namespace SecureWave.Services
 
             if (user == null)
             {
-                return null;
+                throw new KeyNotFoundException($"User with email {email} not found.");
             }
 
             return new UserDTO
