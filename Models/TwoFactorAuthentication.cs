@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SecureWave.Models
+﻿namespace SecureWave.Models
 {
     public class TwoFactorAuthentication
     {

@@ -57,6 +57,11 @@ internal class Program
         builder.Services.AddScoped<ICredentialRepository, CredentialRepository>();
         // Register Services
         builder.Services.AddScoped<ICredentialService, CredentialService>();
+        //Register RequestAccessRepository
+        builder.Services.AddScoped<IAccessRequestRepository, AccessRequestRepository>();
+        //Register RequestAccessService
+        builder.Services.AddScoped<IAccessRequestService, AccessRequestService>();
+        
 
         // Add JWT Authentication
         var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:SecretKey"]);

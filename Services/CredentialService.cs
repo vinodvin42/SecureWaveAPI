@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SecureWave.Models;
+﻿using SecureWave.Models;
 using SecureWaveAPI.Repositories.Interfaces;
 using SecureWaveAPI.Services.Interfaces;
 using SecureWaveAPI.Utilities;

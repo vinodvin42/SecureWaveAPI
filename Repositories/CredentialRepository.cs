@@ -18,7 +18,7 @@ namespace SecureWaveAPI.Repositories
             return await _context.Credentials.ToListAsync();
         }
 
-        public async Task<Credential?> GetCredentialByIdAsync(Guid id)
+        public async Task<Credential> GetCredentialByIdAsync(Guid id)
         {
             return await _context.Credentials.FirstOrDefaultAsync(c => c.CredentialId == id);
         }

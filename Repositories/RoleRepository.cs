@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecureWave.Data;
 using SecureWave.Models;
-using SecureWaveAPI.Models.Enums;
 using SecureWaveAPI.Repositories.Interfaces;
 
 namespace SecureWaveAPI.Repositories

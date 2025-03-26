@@ -1,6 +1,5 @@
 ﻿using SecureWaveAPI.Services.Interfaces;
 using System.Security.Claims;
-using Microsoft.Extensions.Logging;
 
 namespace SecureWave.Services
 {

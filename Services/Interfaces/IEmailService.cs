@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace SecureWaveAPI.Services.Interfaces
 {
     public interface IEmailService

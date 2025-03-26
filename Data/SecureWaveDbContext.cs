@@ -30,9 +30,6 @@ namespace SecureWave.Data
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId }); // Composite primary key
 
-            modelBuilder.Entity<ResourceTag>()
-                .HasKey(rt => rt.TagId);
-
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.UserRoles)
@@ -56,7 +53,7 @@ namespace SecureWave.Data
                 .HasKey(tfa => tfa.TwoFactorId);
 
             modelBuilder.Entity<AccessRequest>()
-                .HasKey(rt => rt.RequestId);
+                .HasKey(ar => ar.RequestId);
 
             modelBuilder.Entity<AccessRequest>()
                 .HasOne(ar => ar.User)
@@ -67,6 +64,19 @@ namespace SecureWave.Data
                 .HasOne(ar => ar.Resource)
                 .WithMany(r => r.AccessRequests)
                 .HasForeignKey(ar => ar.ResourceId);
+
+            // Add additional properties and relationships for AccessRequest
+            modelBuilder.Entity<AccessRequest>()
+                .Property(ar => ar.Status)
+                .IsRequired();
+
+            modelBuilder.Entity<AccessRequest>()
+                .Property(ar => ar.RequestDate)
+                .IsRequired();
+
+            modelBuilder.Entity<AccessRequest>()
+                .Property(ar => ar.ApprovalDate)
+                .IsRequired(false);
 
             modelBuilder.Entity<Session>()
                 .HasOne(s => s.User)
@@ -95,6 +105,9 @@ namespace SecureWave.Data
                 .HasOne(tfa => tfa.User)
                 .WithMany(u => u.TwoFactorAuthentications)
                 .HasForeignKey(tfa => tfa.UserId);
+
+            modelBuilder.Entity<ResourceTag>()
+                .HasKey(rt => rt.TagId);
 
             // Seed initial data
             SeedData.Seed(modelBuilder);

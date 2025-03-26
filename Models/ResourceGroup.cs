@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SecureWave.Models
+﻿namespace SecureWave.Models
 {
     public class ResourceGroup
     {
