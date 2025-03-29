@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecureWave.Data;
 using SecureWave.Models;
+using SecureWaveAPI.Models.Dtos;
 using SecureWaveAPI.Models.Enums;
 
 namespace SecureWaveAPI.Repositories
@@ -14,9 +15,32 @@ namespace SecureWaveAPI.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Resource>> GetAllResourcesAsync()
+        public async Task<IEnumerable<ResourceDto>> GetAllResourcesAsync()
         {
-            return await _context.Resources.ToListAsync();
+            var resources = await _context.Resources
+                .Include(r => r.ResourceTags) // Ensure ResourceTags are loaded
+                .ToListAsync();
+
+            return resources.Select(resource => new ResourceDto
+            {
+                ResourceId = resource.ResourceId,
+                ResourceName = resource.ResourceName,
+                Description = resource.Description,
+                CreatedAt = resource.CreatedAt,
+                HostName = resource.HostName,
+                Port = (int)resource.Port,
+                ApiEndpoint = resource.ApiEndpoint,
+                CertificateDetails = resource.CertificateDetails,
+                ResourceTags = resource.ResourceTags?.Select(tag => tag.TagName).ToList() ?? new List<string>(), // Map tag names
+                ResourceType = Enum.GetName(typeof(ResourceType), resource.ResourceType) ?? "Unknown",
+                Protocol = Enum.GetName(typeof(Protocol), resource.Protocol) ?? "Unknown",
+                OperatingSystem = Enum.GetName(typeof(Models.Enums.OperatingSystem), resource.OperatingSystem) ?? "Unknown",
+                DatabaseType = Enum.GetName(typeof(Models.Enums.DatabaseType), resource.DatabaseType) ?? "Unknown",
+                CloudProvider = Enum.GetName(typeof(Models.Enums.CloudProvider), resource.CloudProvider) ?? "Unknown",
+                FileSystemType = Enum.GetName(typeof(Models.Enums.FileSystemType), resource.FileSystemType) ?? "Unknown",
+                ContainerType = Enum.GetName(typeof(Models.Enums.ContainerType), resource.ContainerType) ?? "Unknown",
+                DeviceType = Enum.GetName(typeof(Models.Enums.DeviceType), resource.DeviceType) ?? "Unknown"
+            });
         }
 
         public async Task<Resource> GetResourceByIdAsync(Guid id)
@@ -50,44 +74,61 @@ namespace SecureWaveAPI.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<IEnumerable<string>> GetResourceTypesAsync()
+
+        public async Task<IEnumerable<object>> GetResourceTypesAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(ResourceType)));
+            return await Task.FromResult(Enum.GetValues(typeof(ResourceType))
+                .Cast<ResourceType>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
 
-        public async Task<IEnumerable<string>> GetResourceProtocolAsync()
+        public async Task<IEnumerable<object>> GetResourceProtocolAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(Protocol)));
+            return await Task.FromResult(Enum.GetValues(typeof(Protocol))
+                .Cast<Protocol>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
 
-        public async Task<IEnumerable<string>> GetResourceOperatingSystemAsync()
+        public async Task<IEnumerable<object>> GetResourceOperatingSystemAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.OperatingSystem)));
+            return await Task.FromResult(Enum.GetValues(typeof(Models.Enums.OperatingSystem))
+                .Cast<Models.Enums.OperatingSystem>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
 
-        public async Task<IEnumerable<string>> GetResourceDatabaseTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceDatabaseTypeAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.DatabaseType)));
+            return await Task.FromResult(Enum.GetValues(typeof(Models.Enums.DatabaseType))
+                .Cast<Models.Enums.DatabaseType>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
 
-        public async Task<IEnumerable<string>> GetResourceCloudProviderAsync()
+        public async Task<IEnumerable<object>> GetResourceCloudProviderAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.CloudProvider)));
+            return await Task.FromResult(Enum.GetValues(typeof(Models.Enums.CloudProvider))
+                .Cast<Models.Enums.CloudProvider>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
 
-        public async Task<IEnumerable<string>> GetResourceFileSystemTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceFileSystemTypeAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.FileSystemType)));
+            return await Task.FromResult(Enum.GetValues(typeof(Models.Enums.FileSystemType))
+                .Cast<Models.Enums.FileSystemType>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
 
-        public async Task<IEnumerable<string>> GetResourceContainerTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceContainerTypeAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.ContainerType)));
+            return await Task.FromResult(Enum.GetValues(typeof(Models.Enums.ContainerType))
+                .Cast<Models.Enums.ContainerType>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
 
-        public async Task<IEnumerable<string>> GetResourceDeviceTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceDeviceTypeAsync()
         {
-            return await Task.FromResult(Enum.GetNames(typeof(Models.Enums.DeviceType)));
+            return await Task.FromResult(Enum.GetValues(typeof(Models.Enums.DeviceType))
+                .Cast<Models.Enums.DeviceType>()
+                .Select(e => new { Id = (int)e, Value = e.ToString() }));
         }
     }
 }

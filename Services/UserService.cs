@@ -84,6 +84,8 @@ namespace SecureWave.Services
             }
 
             var users = await _userRepository.GetAllUsersAsync();
+            var roles = await _roleRepository.GetAllRolesAsync(); // Fetch all roles for mapping
+
             return users.Select(u => new UserDTO
             {
                 UserId = u.UserId,
@@ -97,7 +99,7 @@ namespace SecureWave.Services
                 LockoutEndTime = u.LockoutEndTime,
                 LastPasswordChange = u.LastPasswordChange,
                 PasswordExpiryDate = u.PasswordExpiryDate,
-                AccessLevel = u.AccessLevel,
+                AccessLevel = roles.FirstOrDefault(r => r.RoleId.ToString() == u.AccessLevel)?.RoleName ?? "Unknown", // Map role name
                 SessionTimeout = u.SessionTimeout,
                 AccessJustification = u.AccessJustification,
                 IsDeleted = u.IsDeleted,

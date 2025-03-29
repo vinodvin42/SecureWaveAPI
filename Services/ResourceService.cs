@@ -1,4 +1,5 @@
 ﻿using SecureWave.Models;
+using SecureWaveAPI.Models.Dtos;
 using SecureWaveAPI.Repositories;
 
 namespace SecureWaveAPI.Services
@@ -12,7 +13,7 @@ namespace SecureWaveAPI.Services
             _resourceRepository = resourceRepository;
         }
 
-        public async Task<IEnumerable<Resource>> GetAllResourcesAsync()
+        public async Task<IEnumerable<ResourceDto>> GetAllResourcesAsync()
         {
             return await _resourceRepository.GetAllResourcesAsync();
         }
@@ -37,44 +38,44 @@ namespace SecureWaveAPI.Services
             await _resourceRepository.DeleteResourceAsync(id);
         }
 
-        public async Task<IEnumerable<string>> GetResourceTypesAsync()
+        public async Task<IEnumerable<object>> GetResourceTypesAsync()
         {
             return await _resourceRepository.GetResourceTypesAsync();
         }
 
-        public async Task<IEnumerable<string>> GetResourceProtocolAsync()
+        public async Task<IEnumerable<object>> GetResourceProtocolAsync()
         {
             return await _resourceRepository.GetResourceProtocolAsync();
         }
 
-        public async Task<IEnumerable<string>> GetResourceOperatingSystemAsync()
+        public async Task<IEnumerable<object>> GetResourceOperatingSystemAsync()
         {
             return await _resourceRepository.GetResourceOperatingSystemAsync();
         }
 
-        public async Task<IEnumerable<string>> GetResourceDatabaseTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceDatabaseTypeAsync()
         {
             return await _resourceRepository.GetResourceDatabaseTypeAsync();
         }
 
-        public async Task<IEnumerable<string>> GetResourceCloudProviderAsync()
+        public async Task<IEnumerable<object>> GetResourceCloudProviderAsync()
         {
             return await _resourceRepository.GetResourceCloudProviderAsync();
         }
 
-        public async Task<IEnumerable<string>> GetResourceFileSystemTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceFileSystemTypeAsync()
         {
             return await _resourceRepository.GetResourceFileSystemTypeAsync();
         }
 
-        public async Task<IEnumerable<string>> GetResourceContainerTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceContainerTypeAsync()
         {
             return await _resourceRepository.GetResourceContainerTypeAsync();
         }
 
-        public Task<IEnumerable<string>> GetResourceDeviceTypeAsync()
+        public async Task<IEnumerable<object>> GetResourceDeviceTypeAsync()
         {
-            return _resourceRepository.GetResourceDeviceTypeAsync();
+            return await _resourceRepository.GetResourceDeviceTypeAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SecureWave.Models;
+using SecureWaveAPI.Models.Dtos;
 using SecureWaveAPI.Services;
 
 namespace SecureWave.Controllers
@@ -16,7 +17,7 @@ namespace SecureWave.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Resource>>> GetResources()
+        public async Task<ActionResult<IEnumerable<ResourceDto>>> GetResources()
         {
             var resources = await _resourceService.GetAllResourcesAsync();
             return Ok(resources);
@@ -74,29 +75,29 @@ namespace SecureWave.Controllers
         [HttpGet("protocol")]
         public async Task<ActionResult> GetResourceProtocolAsync()
         {
-            var resourceProtocall = await _resourceService.GetResourceProtocolAsync();
-            return Ok(resourceProtocall);
+            var resourceProtocols = await _resourceService.GetResourceProtocolAsync();
+            return Ok(resourceProtocols);
         }
 
         [HttpGet("operatingsystem")]
         public async Task<ActionResult> GetResourceOperatingSystemAsync()
         {
-            var resourceOperatingSystem = await _resourceService.GetResourceOperatingSystemAsync();
-            return Ok(resourceOperatingSystem);
+            var resourceOperatingSystems = await _resourceService.GetResourceOperatingSystemAsync();
+            return Ok(resourceOperatingSystems);
         }
 
         [HttpGet("databasetype")]
         public async Task<ActionResult> GetResourceDatabaseTypeAsync()
         {
-            var databaseType = await _resourceService.GetResourceDatabaseTypeAsync();
-            return Ok(databaseType);
+            var databaseTypes = await _resourceService.GetResourceDatabaseTypeAsync();
+            return Ok(databaseTypes);
         }
 
         [HttpGet("cloudprovider")]
         public async Task<ActionResult> GetResourceCloudProviderAsync()
         {
-            var cloudProvider = await _resourceService.GetResourceCloudProviderAsync();
-            return Ok(cloudProvider);
+            var cloudProviders = await _resourceService.GetResourceCloudProviderAsync();
+            return Ok(cloudProviders);
         }
 
         [HttpGet("filesystemtype")]
