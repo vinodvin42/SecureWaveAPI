@@ -10,7 +10,7 @@
         public DateTime? ApprovalDate { get; set; }
 
         // Navigation properties
-        public User User { get; set; }
-        public Resource Resource { get; set; }
+        public User? User { get; set; }
+        public Resource? Resource { get; set; }
     }
 }

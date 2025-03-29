@@ -15,7 +15,7 @@
         public string SessionData { get; set; } // Encrypted session logs or data
 
         // Navigation Properties
-        public User User { get; set; } // Reference to User
-        public Resource Resource { get; set; } // Reference to Resource
+        public User? User { get; set; } // Reference to User
+        public Resource? Resource { get; set; } // Reference to Resource
     }
 }

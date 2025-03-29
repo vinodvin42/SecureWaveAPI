@@ -35,6 +35,11 @@ namespace SecureWaveAPI.Services
             await _sessionRepository.UpdateSessionAsync(session);
         }
 
+        public async Task UpdateSessionPartialAsync(Session session)
+        {
+            await _sessionRepository.UpdateSessionPartialAsync(session);
+        }
+
         public async Task DeleteSessionAsync(Guid id)
         {
             await _sessionRepository.DeleteSessionAsync(id);

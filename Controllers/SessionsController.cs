@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.JsonPatch;
 using SecureWave.Models;
 using SecureWaveAPI.Services.Interfaces;
 using System.Collections.Generic;
@@ -63,6 +64,41 @@ namespace SecureWaveAPI.Controllers
             }
 
             await _sessionService.DeleteSessionAsync(id);
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchSession(Guid id, [FromBody] JsonPatchDocument<Session> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                return BadRequest("Invalid patch document.");
+            }
+
+            var session = await _sessionService.GetSessionByIdAsync(id);
+            if (session == null)
+            {
+                return NotFound($"Session with ID {id} not found.");
+            }
+
+            // Apply the patch document to the session object
+            patchDoc.ApplyTo(session);
+
+            // Validate the patched object
+            if (!TryValidateModel(session))
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _sessionService.UpdateSessionPartialAsync(session);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
             return NoContent();
         }
     }

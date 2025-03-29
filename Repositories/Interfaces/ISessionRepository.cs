@@ -10,6 +10,7 @@ namespace SecureWaveAPI.Repositories.Interfaces
         Task<Session> GetSessionByIdAsync(Guid id);
         Task CreateSessionAsync(Session session);
         Task UpdateSessionAsync(Session session);
+        Task UpdateSessionPartialAsync(Session session);
         Task DeleteSessionAsync(Guid id);
     }
 }

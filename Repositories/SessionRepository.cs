@@ -38,6 +38,12 @@ namespace SecureWaveAPI.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateSessionPartialAsync(Session session)
+        {
+            _context.Entry(session).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteSessionAsync(Guid id)
         {
             var session = await GetSessionByIdAsync(id);
